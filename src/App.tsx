@@ -1,5 +1,12 @@
+import GlobalCss from "./styles";
+
 function App() {
-  return <h1>Hellow</h1>;
+  return (
+    <>
+      <GlobalCss />
+      <div className="container"></div>
+    </>
+  );
 }
 
 export default App;
