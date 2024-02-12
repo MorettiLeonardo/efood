@@ -1,4 +1,4 @@
-import GlobalCss from "./styles";
+import GlobalCss from './styles'
 
 function App() {
   return (
@@ -6,7 +6,7 @@ function App() {
       <GlobalCss />
       <div className="container"></div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

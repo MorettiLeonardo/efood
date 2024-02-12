@@ -1,11 +1,11 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 export const colors = {
-  white: "#fff",
-  beige: "#FFF8F2",
-  darkBeige: "#FFEBD9",
-  salmon: "#E66767",
-};
+  white: '#fff',
+  beige: '#FFF8F2',
+  darkBeige: '#FFEBD9',
+  salmon: '#E66767'
+}
 
 const GlobalCss = createGlobalStyle`
   * {
@@ -21,6 +21,6 @@ const GlobalCss = createGlobalStyle`
     width: 100%;
     margin: 0 auto;
   }
-`;
+`
 
-export default GlobalCss;
+export default GlobalCss
