@@ -11,19 +11,12 @@ import {
 
 type Props = {
   name: string
-  category: string
   description: string
   image: string
   infos: string[]
 }
 
-const RestaurantCard = ({
-  name,
-  category,
-  description,
-  image,
-  infos
-}: Props) => (
+const RestaurantCard = ({ name, description, image, infos }: Props) => (
   <Card>
     <RestaurantImage src={image} alt="Foto do restaurante" />
     <Tags>
@@ -40,7 +33,9 @@ const RestaurantCard = ({
         </div>
       </Infos>
       <Description>{description}</Description>
-      <Tag>Saiba mais</Tag>
+      <a href="#">
+        <Tag>Saiba mais</Tag>
+      </a>
     </CardContainer>
   </Card>
 )

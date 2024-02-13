@@ -17,6 +17,10 @@ const GlobalCss = createGlobalStyle`
     font-family: "Roboto", sans-serif;
   }
 
+  body {
+    background-color: ${colors.beige};
+  }
+
   .container {
     max-width: 1024px;
     width: 100%;
