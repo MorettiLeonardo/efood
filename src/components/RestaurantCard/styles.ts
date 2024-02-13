@@ -43,4 +43,6 @@ export const Tags = styled.div`
   position: absolute;
   top: 16px;
   right: 16px;
+  display: flex;
+  gap: 8px;
 `

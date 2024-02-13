@@ -1,5 +1,4 @@
-import start from '../../assets/images/star.svg'
-import sushi from '../../assets/images/sushi.svg'
+import star from '../../assets/images/star.svg'
 import Tag from '../Tag'
 import {
   Card,
@@ -10,23 +9,37 @@ import {
   Tags
 } from './styles'
 
-const RestaurantCard = () => (
+type Props = {
+  name: string
+  category: string
+  description: string
+  image: string
+  infos: string[]
+}
+
+const RestaurantCard = ({
+  name,
+  category,
+  description,
+  image,
+  infos
+}: Props) => (
   <Card>
-    <RestaurantImage src={sushi} alt="Foto do restaurante" />
+    <RestaurantImage src={image} alt="Foto do restaurante" />
+    <Tags>
+      {infos.map((info) => (
+        <Tag key={info}>{info}</Tag>
+      ))}
+    </Tags>
     <CardContainer>
       <Infos>
-        <h3>Hioki Sushi</h3>
+        <h3>{name}</h3>
         <div>
           <span>4.9</span>
-          <img src={start} alt="Nota" />
+          <img src={star} alt="estrelas" />
         </div>
       </Infos>
-      <Description>
-        Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis
-        frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega
-        rápida, embalagens cuidadosas e qualidade garantida. Experimente o Japão
-        sem sair do lar com nosso delivery!
-      </Description>
+      <Description>{description}</Description>
       <Tag>Saiba mais</Tag>
     </CardContainer>
   </Card>
