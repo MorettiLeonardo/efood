@@ -2,6 +2,7 @@ import Header from './components/Header'
 import GlobalCss from './styles'
 
 import RestaurantList from './components/RestaurantList'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div className="container">
         <RestaurantList />
       </div>
+      <Footer />
     </>
   )
 }
