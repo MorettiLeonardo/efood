@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import star from '../../assets/images/star.svg'
 import Tag from '../Tag'
 import {
@@ -33,9 +34,9 @@ const RestaurantCard = ({ name, description, image, infos }: Props) => (
         </div>
       </Infos>
       <Description>{description}</Description>
-      <a href="#">
+      <Link to={'/restaurante'}>
         <Tag>Saiba mais</Tag>
-      </a>
+      </Link>
     </CardContainer>
   </Card>
 )
