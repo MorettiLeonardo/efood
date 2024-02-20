@@ -6,7 +6,7 @@ import { colors } from '../../styles'
 export const BannerContainer = styled.div`
   background-image: url(${sushi});
   height: 280px;
-  width: 100vw;
+  width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   color: ${colors.white};

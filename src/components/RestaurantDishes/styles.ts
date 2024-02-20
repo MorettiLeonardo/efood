@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { colors } from '../../styles'
 
 export const Card = styled.div`
+  position: relative;
   background-color: ${colors.salmon};
   color: ${colors.darkBeige};
   max-width: 320px;
@@ -36,4 +37,63 @@ export const CardButton = styled.button`
   line-height: 16px;
   background-color: ${colors.darkBeige};
   border: none;
+`
+
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  &.visible {
+    display: flex;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.73);
+  }
+`
+
+export const ModalContent = styled.div`
+  position: relative;
+  background-color: ${colors.salmon};
+  height: 344px;
+  padding: 32px;
+  gap: 24px;
+  display: flex;
+  z-index: 1;
+
+  img:last-child {
+    max-width: 16px;
+    max-height: 16px;
+    bottom: 0;
+    right: 0;
+    position: relative;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  button {
+    margin-top: 16px;
+    max-width: 218px;
+  }
+
+  img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+  }
 `
