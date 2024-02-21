@@ -3,6 +3,9 @@ import { colors } from '../../styles'
 
 export const RestaurantImage = styled.img`
   margin-bottom: -8px;
+  object-fit: cover;
+  max-height: 217px;
+  width: 100%;
 `
 
 export const CardContainer = styled.div`
@@ -11,12 +14,13 @@ export const CardContainer = styled.div`
 `
 
 export const Card = styled.div`
+  position: relative;
   max-width: 472px;
   width: 100%;
   color: ${colors.salmon};
   font-size: 18px;
   font-weight: bold;
-  position: relative;
+  background-color: ${colors.white};
 `
 
 export const Infos = styled.div`
@@ -39,10 +43,9 @@ export const Description = styled.p`
   margin-bottom: 16px;
 `
 
-export const Tags = styled.div`
+export const TagContainer = styled.div`
+  background-color: red;
   position: absolute;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  gap: 8px;
+  top: 10px;
+  right: 10px;
 `

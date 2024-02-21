@@ -20,7 +20,7 @@ const Footer = () => (
       </a>
     </SocialLinks>
     <P>
-      A efood é uma plataforma para divulgação de estabelecimentos, a
+      A E-FOOD é uma plataforma para divulgação de estabelecimentos, a
       responsabilidade pela entrega, qualidade dos produtos é toda do
       estabelecimento contratado.
     </P>

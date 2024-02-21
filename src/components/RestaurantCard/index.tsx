@@ -7,38 +7,49 @@ import {
   CardContainer,
   Description,
   RestaurantImage,
-  Tags
+  TagContainer
 } from './styles'
 
 type Props = {
-  name: string
+  id: number
+  title: string
+  highlighted: boolean
+  type: string
+  review: number
   description: string
-  image: string
-  infos: string[]
+  cover: string
 }
 
-const RestaurantCard = ({ name, description, image, infos }: Props) => (
-  <Card>
-    <RestaurantImage src={image} alt="Foto do restaurante" />
-    <Tags>
-      {infos.map((info) => (
-        <Tag key={info}>{info}</Tag>
-      ))}
-    </Tags>
-    <CardContainer>
-      <Infos>
-        <h3>{name}</h3>
-        <div>
-          <span>4.9</span>
-          <img src={star} alt="estrelas" />
-        </div>
-      </Infos>
-      <Description>{description}</Description>
-      <Link to={'/restaurante'}>
-        <Tag>Saiba mais</Tag>
-      </Link>
-    </CardContainer>
-  </Card>
-)
+const RestaurantCard = ({ description, cover, title, review, type }: Props) => {
+  const descMax = (desc: string) => {
+    if (desc.length > 200) {
+      return desc.slice(0, 190) + '...'
+    }
+
+    return desc
+  }
+
+  return (
+    <Card>
+      <TagContainer>
+        <Tag>{type}</Tag>
+      </TagContainer>
+      <RestaurantImage src={cover} alt="Foto do restaurante" />
+      <CardContainer>
+        <Infos>
+          <h3>{title}</h3>
+          <div>
+            <span>{review}</span>
+            <img src={star} alt="estrelas" />
+          </div>
+        </Infos>
+        <Description>{descMax(description)}</Description>
+        <Link to={'/restaurante'}>
+          <Tag>Saiba mais</Tag>
+        </Link>
+      </CardContainer>
+    </Card>
+  )
+}
 
 export default RestaurantCard
