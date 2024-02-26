@@ -20,6 +20,14 @@ type Props = {
   cover: string
 }
 
+export const descMax = (desc: string) => {
+  if (desc.length > 200) {
+    return desc.slice(0, 190) + '...'
+  }
+
+  return desc
+}
+
 const RestaurantCard = ({
   description,
   cover,
@@ -28,14 +36,6 @@ const RestaurantCard = ({
   type,
   id
 }: Props) => {
-  const descMax = (desc: string) => {
-    if (desc.length > 200) {
-      return desc.slice(0, 190) + '...'
-    }
-
-    return desc
-  }
-
   return (
     <Card>
       <TagContainer>

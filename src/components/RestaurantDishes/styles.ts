@@ -12,6 +12,9 @@ export const Card = styled.div`
 
 export const CardImage = styled.img`
   max-width: 304px;
+  width: 100%;
+  max-height: 167px;
+  object-fit: cover;
 `
 
 export const CardTitle = styled.h3`

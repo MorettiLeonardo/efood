@@ -12,6 +12,7 @@ import {
   Modal,
   ModalContent
 } from './styles'
+import { descMax } from '../RestaurantCard'
 
 type Modal = {
   isVisible: boolean
@@ -23,9 +24,16 @@ type Props = {
   description: string
   portion: string
   price: number
+  cover: string
 }
 
-const RestaurantDishes = ({ description, name, portion, price }: Props) => {
+const RestaurantDishes = ({
+  description,
+  name,
+  portion,
+  price,
+  cover
+}: Props) => {
   const [modal, setModal] = useState<Modal>({ isVisible: false, url: '' })
 
   const closeModal = () => {
@@ -34,12 +42,12 @@ const RestaurantDishes = ({ description, name, portion, price }: Props) => {
 
   return (
     <Card>
-      <CardImage src={sushi} alt="prato de sushi" />
+      <CardImage src={cover} alt={name} />
       <CardTitle>{name}</CardTitle>
-      <CardDescription>{description}</CardDescription>
+      <CardDescription>{descMax(description)}</CardDescription>
       <Modal className={modal.isVisible ? 'visible' : ''}>
         <ModalContent className="container">
-          <img src={sushi} alt="sushi" />
+          <img src={cover} alt={name} />
           <div>
             <CardTitle>{name}</CardTitle>
             <CardDescription>{description}</CardDescription>

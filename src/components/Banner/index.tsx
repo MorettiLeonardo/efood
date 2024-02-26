@@ -1,10 +1,15 @@
 import { BannerContainer, Category } from './styles'
 
-const Banner = () => (
+type Props = {
+  name: string | undefined
+  category: string | undefined
+}
+
+const Banner = ({ category, name }: Props) => (
   <BannerContainer>
     <div className="container">
-      <Category>Japonesa</Category>
-      <h2>Hioki Sushi </h2>
+      <Category>{category}</Category>
+      <h2>{name} </h2>
     </div>
   </BannerContainer>
 )
