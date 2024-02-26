@@ -20,7 +20,14 @@ type Props = {
   cover: string
 }
 
-const RestaurantCard = ({ description, cover, title, review, type }: Props) => {
+const RestaurantCard = ({
+  description,
+  cover,
+  title,
+  review,
+  type,
+  id
+}: Props) => {
   const descMax = (desc: string) => {
     if (desc.length > 200) {
       return desc.slice(0, 190) + '...'
@@ -44,7 +51,7 @@ const RestaurantCard = ({ description, cover, title, review, type }: Props) => {
           </div>
         </Infos>
         <Description>{descMax(description)}</Description>
-        <Link to={'/restaurante'}>
+        <Link to={`/restaurante/${id}`}>
           <Tag>Saiba mais</Tag>
         </Link>
       </CardContainer>
