@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import sushi from '../../assets/images/sushi.svg'
 import close from '../../assets/images/close.svg'
 
 import {

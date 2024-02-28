@@ -1,12 +1,13 @@
 import { BannerContainer, Category } from './styles'
 
-type Props = {
-  name: string | undefined
-  category: string | undefined
+export type Props = {
+  name?: string | undefined
+  category?: string | undefined
+  bgImage?: string | undefined
 }
 
-const Banner = ({ category, name }: Props) => (
-  <BannerContainer>
+const Banner = ({ category, name, bgImage }: Props) => (
+  <BannerContainer bgImage={bgImage}>
     <div className="container">
       <Category>{category}</Category>
       <h2>{name} </h2>

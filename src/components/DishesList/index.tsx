@@ -10,7 +10,6 @@ export const DishesList = () => {
   const { id } = useParams()
 
   const { data: restaurant } = useGetRestaurantDishesQuery(id!)
-  console.log(restaurant)
 
   if (!restaurant) return <h4>Carregando...</h4>
 
