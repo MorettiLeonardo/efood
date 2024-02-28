@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 
 import { breakpoints, colors } from '../../styles'
-import { Props } from '.'
 
-export const BannerContainer = styled.div<Props>`
+export const BannerContainer = styled.div`
   object-fit: cover;
-  background-image: url(${(props) => props.bgImage});
   height: 280px;
   width: 100%;
   color: ${colors.white};
