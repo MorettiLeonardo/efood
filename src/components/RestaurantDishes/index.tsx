@@ -52,7 +52,7 @@ const RestaurantDishes = ({
             <CardTitle>{name}</CardTitle>
             <CardDescription>{description}</CardDescription>
             <br />
-            <CardDescription>{portion}</CardDescription>
+            <CardDescription>Serve: de {portion}</CardDescription>
             <CardButton>Adicionar ao carrinho - R$ {price}</CardButton>
           </div>
           <img
