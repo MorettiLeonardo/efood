@@ -40,6 +40,7 @@ export const CardButton = styled.button`
   line-height: 16px;
   background-color: ${colors.darkBeige};
   border: none;
+  cursor: pointer;
 `
 
 export const Modal = styled.div`

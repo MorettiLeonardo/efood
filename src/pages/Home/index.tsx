@@ -4,6 +4,15 @@ import RestaurantList from '../../components/RestaurantList'
 
 import { useGetRestaurantsQuery } from '../../services/api'
 
+export type Cardapio = {
+  id: number
+  foto: string
+  preco: number
+  nome: string
+  porcao: string
+  descricao: string
+}
+
 export type Restaurant = {
   id: number
   titulo: string
@@ -12,14 +21,7 @@ export type Restaurant = {
   avaliacao: number
   descricao: string
   capa: string
-  cardapio: {
-    id: number
-    foto: string
-    preco: number
-    nome: string
-    porcao: string
-    descricao: string
-  }
+  cardapio: Cardapio[]
 }
 
 const Home = () => {

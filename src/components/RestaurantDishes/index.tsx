@@ -13,6 +13,10 @@ import {
   ModalContent
 } from './styles'
 import { descMax } from '../RestaurantCard'
+import { useDispatch } from 'react-redux'
+
+import { add, open } from '../../store/reducers/cart'
+import { Cardapio } from '../../pages/Home'
 
 type Modal = {
   isVisible: boolean
@@ -20,40 +24,40 @@ type Modal = {
 }
 
 type Props = {
-  name: string
-  description: string
-  portion: string
-  price: number
-  cover: string
+  cardapio: Cardapio
 }
 
-const RestaurantDishes = ({
-  description,
-  name,
-  portion,
-  price,
-  cover
-}: Props) => {
+const RestaurantDishes = ({ cardapio }: Props) => {
   const [modal, setModal] = useState<Modal>({ isVisible: false, url: '' })
 
   const closeModal = () => {
     setModal({ isVisible: false, url: '' })
   }
 
+  const dispatch = useDispatch()
+
+  const addToCart = () => {
+    dispatch(add(cardapio))
+    dispatch(open())
+    closeModal()
+  }
+
   return (
     <Card>
-      <CardImage src={cover} alt={name} />
-      <CardTitle>{name}</CardTitle>
-      <CardDescription>{descMax(description)}</CardDescription>
+      <CardImage src={cardapio.foto} alt={cardapio.nome} />
+      <CardTitle>{cardapio.nome}</CardTitle>
+      <CardDescription>{descMax(cardapio.descricao)}</CardDescription>
       <Modal className={modal.isVisible ? 'visible' : ''}>
         <ModalContent className="container">
-          <img src={cover} alt={name} />
+          <img src={cardapio.foto} alt={cardapio.nome} />
           <div>
-            <CardTitle>{name}</CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardTitle>{cardapio.nome}</CardTitle>
+            <CardDescription>{cardapio.descricao}</CardDescription>
             <br />
-            <CardDescription>Serve: de {portion}</CardDescription>
-            <CardButton>Adicionar ao carrinho - R$ {price}</CardButton>
+            <CardDescription>Serve: de {cardapio.porcao}</CardDescription>
+            <CardButton onClick={addToCart}>
+              Adicionar ao carrinho - R$ {cardapio.preco}
+            </CardButton>
           </div>
           <img
             src={close}

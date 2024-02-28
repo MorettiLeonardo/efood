@@ -1,25 +1,16 @@
-import RestaurantDishes from '../RestaurantDishes'
-import { List, ListContainer } from './styles'
 import { useParams } from 'react-router-dom'
+
 import { useGetRestaurantDishesQuery } from '../../services/api'
 
-interface CardapioItem {
-  id: number
-  foto: string
-  preco: number
-  nome: string
-  porcao: string
-  descricao: string
-}
+import RestaurantDishes from '../RestaurantDishes'
 
-export interface RestaurantWithCardapio {
-  cardapio: CardapioItem[]
-}
+import { List, ListContainer } from './styles'
 
 export const DishesList = () => {
   const { id } = useParams()
 
   const { data: restaurant } = useGetRestaurantDishesQuery(id!)
+  console.log(restaurant)
 
   if (!restaurant) return <h4>Carregando...</h4>
 
@@ -27,19 +18,11 @@ export const DishesList = () => {
     <ListContainer>
       <div className="container">
         <List>
-          {restaurant &&
-            restaurant.cardapio &&
-            restaurant.cardapio.map((item) => (
-              <li key={item.id}>
-                <RestaurantDishes
-                  cover={item.foto}
-                  description={item.descricao}
-                  name={item.nome}
-                  portion={item.porcao}
-                  price={item.preco}
-                />
-              </li>
-            ))}
+          {restaurant?.cardapio.map((item) => (
+            <li key={item.id}>
+              <RestaurantDishes cardapio={item} />
+            </li>
+          ))}
         </List>
       </div>
     </ListContainer>
