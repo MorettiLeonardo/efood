@@ -4,7 +4,8 @@ export const colors = {
   white: '#fff',
   beige: '#FFF8F2',
   darkBeige: '#FFEBD9',
-  salmon: '#E66767'
+  salmon: '#E66767',
+  black: '#000'
 }
 
 const GlobalCss = createGlobalStyle`
