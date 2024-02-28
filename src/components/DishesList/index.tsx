@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Restaurant } from '../../pages/Home'
 import RestaurantDishes from '../RestaurantDishes'
 import { List, ListContainer } from './styles'
 import { useParams } from 'react-router-dom'
+import { useGetRestaurantDishesQuery } from '../../services/api'
 
 interface CardapioItem {
   id: number
@@ -13,19 +12,16 @@ interface CardapioItem {
   descricao: string
 }
 
-interface RestaurantWithCardapio {
+export interface RestaurantWithCardapio {
   cardapio: CardapioItem[]
 }
 
 export const DishesList = () => {
   const { id } = useParams()
-  const [restaurant, setRestaurant] = useState<RestaurantWithCardapio>()
 
-  useEffect(() => {
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-      .then((res) => res.json())
-      .then((res) => setRestaurant(res))
-  }, [id])
+  const { data: restaurant } = useGetRestaurantDishesQuery(id!)
+
+  if (!restaurant) return <h4>Carregando...</h4>
 
   return (
     <ListContainer>

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState } from 'react'
 
 import Banner from '../../components/Banner'
 import DishesList from '../../components/DishesList'
@@ -8,14 +7,7 @@ import RestaurantHeader from '../../components/RestaurantHeader'
 import { Restaurant } from '../Home'
 
 const RestaurantPage = () => {
-  const { id } = useParams()
   const [restaurant, setRestaurant] = useState<Restaurant>()
-
-  useEffect(() => {
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-      .then((res) => res.json())
-      .then((res) => setRestaurant(res))
-  }, [id])
 
   return (
     <>

@@ -5,12 +5,12 @@ import RestaurantCard from '../RestaurantCard'
 import { ListContainer } from './styles'
 
 type Props = {
-  restaurants: Restaurant[]
+  restaurant: Restaurant[]
 }
 
-const RestaurantList = ({ restaurants }: Props) => (
+const RestaurantList = ({ restaurant }: Props) => (
   <ListContainer>
-    {restaurants.map((restaurant) => (
+    {restaurant.map((restaurant) => (
       <li key={restaurant.id}>
         <RestaurantCard
           title={restaurant.titulo}
