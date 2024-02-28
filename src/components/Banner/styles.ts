@@ -11,6 +11,12 @@ export const BannerContainer = styled.div<Props>`
   color: ${colors.white};
   font-size: 32px;
   line-height: 37px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    h2 {
+      font-size: 24px;
+    }
+  }
 `
 
 export const Category = styled.h3`

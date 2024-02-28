@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 import headerImage from '../../assets/images/bg-header.svg'
 
@@ -12,6 +12,11 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 65px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    flex-direction: column;
+    gap: 24px;
+  }
 `
 
 export const Title = styled.h2`
