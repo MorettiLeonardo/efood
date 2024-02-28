@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 import bgHeader from '../../assets/images/bg-header.svg'
 
@@ -19,6 +19,11 @@ export const Title = styled.h1`
   font-size: 36px;
   margin-top: 140px;
   margin-bottom: 40px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 26px;
+    max-width: 80%;
+  }
 `
 
 export const HeaderImage = styled.img`

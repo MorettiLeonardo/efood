@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import bgHeader from '../../assets/images/bg-header.svg'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const FooterContainer = styled.footer`
   background-image: url(${bgHeader});
@@ -27,4 +27,8 @@ export const P = styled.p`
   text-align: center;
   font-size: 14px;
   color: ${colors.salmon};
+
+  @media (max-width: ${breakpoints.tablet}) {
+    max-width: 70%;
+  }
 `
