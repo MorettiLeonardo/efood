@@ -24,6 +24,10 @@ export const CartContainer = styled.div`
   &.is-open {
     display: flex;
   }
+
+  .margin-top {
+    margin-top: 16px;
+  }
 `
 
 export const SideBar = styled.aside`
@@ -33,16 +37,23 @@ export const SideBar = styled.aside`
   z-index: 1;
   padding: 16px 8px 0 8px;
 
-  button {
-    width: 100%;
-    border: none;
-    background-color: ${colors.darkBeige};
-    color: ${colors.salmon};
-    padding: 4px;
+  h3 {
+    font-size: 16px;
+    color: ${colors.darkBeige};
+    margin-bottom: 16px;
     margin-top: 16px;
-    font-weight: 700;
-    cursor: pointer;
   }
+`
+
+export const Button = styled.button`
+  margin-top: 8px;
+  width: 100%;
+  border: none;
+  background-color: ${colors.darkBeige};
+  color: ${colors.salmon};
+  padding: 4px;
+  font-weight: 700;
+  cursor: pointer;
 `
 
 export const Product = styled.li`
@@ -87,4 +98,42 @@ export const Trash = styled.img`
   max-width: 16px;
   max-height: 16px;
   cursor: pointer;
+`
+
+export const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    color: ${colors.darkBeige};
+  }
+
+  input {
+    width: 100%;
+    margin: 8px 0;
+    background-color: ${colors.darkBeige};
+    border: 1px solid ${colors.darkBeige};
+    max-height: 32px;
+    padding: 8px;
+  }
+`
+
+type Props = {
+  left?: string
+  right?: string
+}
+
+export const Group = styled.div<Props>`
+  display: grid;
+  grid-template-columns: ${(props) => props.left} ${(props) => props.right};
+  column-gap: 34px;
+`
+
+export const TextOrderPlaced = styled.p`
+  font-size: 14px;
+  line-height: 22px;
+  color: ${colors.darkBeige};
+  margin-top: 8px;
 `
