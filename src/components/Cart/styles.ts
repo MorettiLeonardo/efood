@@ -34,13 +34,15 @@ export const CartContainer = styled.div`
   }
 `
 
-export const SideBar = styled.aside`
+export const FormContainer = styled.form`
   background-color: ${colors.salmon};
   max-width: 360px;
   width: 100%;
   z-index: 1;
   padding: 16px 8px 0 8px;
+`
 
+export const SideBar = styled.aside`
   h3 {
     font-size: 16px;
     color: ${colors.darkBeige};
