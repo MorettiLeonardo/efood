@@ -28,6 +28,10 @@ export const CartContainer = styled.div`
   .margin-top {
     margin-top: 16px;
   }
+
+  .is-hidden {
+    display: none;
+  }
 `
 
 export const SideBar = styled.aside`

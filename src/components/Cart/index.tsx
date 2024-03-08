@@ -15,9 +15,14 @@ import {
 import { RootReducer } from '../../store'
 
 import { close, remove } from '../../store/reducers/cart'
+import { useState } from 'react'
 
 const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+  const [cart, setCart] = useState(true)
+  const [delivery, setDelivery] = useState(false)
+  const [payment, setPayment] = useState(false)
+  const [orderPlaced, setOrderPlaced] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -45,7 +50,7 @@ const Cart = () => {
   return (
     <CartContainer className={isOpen ? 'is-open' : ''}>
       <Overlay onClick={closeCart} />
-      {/* <SideBar>
+      <SideBar className={cart ? '' : 'is-hidden'}>
         <ul>
           {items.map((item) => (
             <Product key={item.id}>
@@ -62,11 +67,15 @@ const Cart = () => {
           <p>Valor total</p>
           <p>{formatPrice(getTotalPrice())}</p>
         </Total>
-        <Button type="button" className="margin-top">
+        <Button
+          type="button"
+          className="margin-top"
+          onClick={() => (setDelivery(true), setCart(false))}
+        >
           Continuar com a entrega
         </Button>
-      </SideBar> */}
-      {/* <SideBar>
+      </SideBar>
+      <SideBar className={delivery ? '' : 'is-hidden'}>
         <form>
           <h3>Entrega</h3>
           <InputGroup>
@@ -95,11 +104,22 @@ const Cart = () => {
             <label htmlFor="complement">Complemento (opcional)</label>
             <input type="text" id="complement" name="complement" />
           </InputGroup>
-          <Button type="button" className="margin-top">Continuar com o pagamento</Button>
-          <Button type="button">Voltar para o carrinho</Button>
+          <Button
+            type="button"
+            className="margin-top"
+            onClick={() => (setDelivery(false), setPayment(true))}
+          >
+            Continuar com o pagamento
+          </Button>
+          <Button
+            type="button"
+            onClick={() => (setDelivery(false), setCart(true))}
+          >
+            Voltar para o carrinho
+          </Button>
         </form>
-      </SideBar> */}
-      {/* <SideBar>
+      </SideBar>
+      <SideBar className={payment ? '' : 'is-hidden'}>
         <form>
           <h3>Pagamento - Valor a pagar R$ 190,90</h3>
           <InputGroup>
@@ -126,13 +146,22 @@ const Cart = () => {
               <input type="number" id="expiresYear" name="expiresYear" />
             </InputGroup>
           </Group>
-          <Button type="button" className="margin-top">
+          <Button
+            type="button"
+            className="margin-top"
+            onClick={() => (setPayment(false), setOrderPlaced(true))}
+          >
             Finalizar pagamento
           </Button>
-          <Button type="button">Voltar para a edição de endereço</Button>
+          <Button
+            type="button"
+            onClick={() => (setPayment(false), setDelivery(true))}
+          >
+            Voltar para a edição de endereço
+          </Button>
         </form>
-      </SideBar> */}
-      <SideBar>
+      </SideBar>
+      <SideBar className={orderPlaced ? '' : 'is-hidden'}>
         <h3>Pedido realizado - #asjda</h3>
         <TextOrderPlaced>
           Estamos felizes em informar que seu pedido já está em processo de
@@ -153,7 +182,12 @@ const Cart = () => {
           Esperamos que desfrute de uma deliciosa e agradável experiência
           gastronômica. Bom apetite!
         </TextOrderPlaced>
-        <Button className="margin-top">Concluir</Button>
+        <Button
+          className="margin-top"
+          onClick={() => (setOrderPlaced(false), setCart(true), closeCart())}
+        >
+          Concluir
+        </Button>
       </SideBar>
     </CartContainer>
   )
