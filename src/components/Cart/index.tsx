@@ -1,10 +1,10 @@
-import { close, remove } from '../../store/reducers/cart'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { close, remove } from '../../store/reducers/cart'
 
 import trash from '../../assets/images/trash.svg'
 
 import { RootReducer } from '../../store'
-import { useState } from 'react'
 
 import {
   Overlay,

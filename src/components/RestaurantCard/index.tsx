@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
+
 import star from '../../assets/images/star.svg'
+
 import Tag from '../Tag'
+
 import {
   Card,
   Infos,

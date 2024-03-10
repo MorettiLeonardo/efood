@@ -1,11 +1,12 @@
-import { Title, HeaderContainer, HeaderWrapper } from './styles'
-
-import logo from '../../assets/images/logo.svg'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { open } from '../../store/reducers/cart'
-import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
+import { open } from '../../store/reducers/cart'
+
+import logo from '../../assets/images/logo.svg'
+
+import { Title, HeaderContainer, HeaderWrapper } from './styles'
 
 const RestaurantHeader = () => {
   const { items } = useSelector((state: RootReducer) => state.cart)
