@@ -21,6 +21,7 @@ import {
 } from './styles'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { usePurchaseMutation } from '../../services/api'
 
 const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
@@ -28,6 +29,8 @@ const Cart = () => {
   const [delivery, setDelivery] = useState(false)
   const [payment, setPayment] = useState(false)
   const [orderPlaced, setOrderPlaced] = useState(false)
+
+  const [purchase, { isError, isLoading, data }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -80,7 +83,31 @@ const Cart = () => {
         .min(5, 'O campo precisa ter pelo menos 5 caracteres')
         .required('O campo é obrigatório')
     }),
-    onSubmit: (values) => console.log(values)
+    onSubmit: (values) =>
+      purchase({
+        delivery: {
+          address: {
+            city: values.city,
+            complement: values.complement,
+            description: values.adress,
+            number: Number(values.number),
+            zipCode: values.cep
+          },
+          receiver: values.fullName
+        },
+        payment: {
+          card: {
+            name: values.cardNameOwner,
+            number: Number(values.cardNumber),
+            code: Number(values.cardCode),
+            expires: {
+              month: 1,
+              year: 2023
+            }
+          }
+        },
+        products: [{ id: 1, price: 10 }]
+      })
   })
 
   const dispatch = useDispatch()
@@ -313,7 +340,7 @@ const Cart = () => {
             type="submit"
             className="margin-top"
             onClick={() => (
-              form.handleSubmit, setPayment(false), setOrderPlaced(true)
+              form.handleSubmit(), setPayment(false), setOrderPlaced(true)
             )}
           >
             Finalizar pagamento
