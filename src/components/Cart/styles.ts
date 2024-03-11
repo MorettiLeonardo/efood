@@ -120,9 +120,13 @@ export const InputGroup = styled.div`
     width: 100%;
     margin: 8px 0;
     background-color: ${colors.darkBeige};
-    border: 1px solid ${colors.darkBeige};
+    border: 4px solid ${colors.darkBeige};
     max-height: 32px;
     padding: 8px;
+
+    &.is-error {
+      border: 4px solid red;
+    }
   }
 `
 

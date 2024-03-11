@@ -29,6 +29,7 @@ const Cart = () => {
   const [delivery, setDelivery] = useState(false)
   const [payment, setPayment] = useState(false)
   const [orderPlaced, setOrderPlaced] = useState(false)
+  const [erro, setErro] = useState(true)
 
   const [purchase, { isError, isLoading, data }] = usePurchaseMutation()
 
@@ -133,12 +134,23 @@ const Cart = () => {
     }, 0)
   }
 
-  const getErrorMessage = (fieldName: string, message?: string) => {
+  const checkInputHasError = (fieldName: string) => {
     const isTouched = fieldName in form.touched
     const isInvalid = fieldName in form.errors
+    const hasError = isInvalid && isTouched
 
-    if (isInvalid && isTouched) return message
-    return ''
+    return hasError
+  }
+
+  const validateCart = () => {
+    if (items.length === 0) {
+      setCart(true)
+      setDelivery(false)
+      alert('Precis ter pelo menos um item no carrinho')
+    } else {
+      setCart(false)
+      setDelivery(true)
+    }
   }
 
   return (
@@ -162,11 +174,7 @@ const Cart = () => {
             <p>Valor total</p>
             <p>{formatPrice(getTotalPrice())}</p>
           </Total>
-          <Button
-            type="button"
-            className="margin-top"
-            onClick={() => (setDelivery(true), setCart(false))}
-          >
+          <Button type="button" className="margin-top" onClick={validateCart}>
             Continuar com a entrega
           </Button>
         </SideBar>
@@ -181,8 +189,8 @@ const Cart = () => {
               value={form.values.fullName}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              className={checkInputHasError('fullName') ? 'is-error' : ''}
             />
-            <small>{getErrorMessage('fullName', form.errors.fullName)}</small>
           </InputGroup>
           <InputGroup>
             <label htmlFor="adress">Endereço</label>
@@ -193,8 +201,8 @@ const Cart = () => {
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               value={form.values.adress}
+              className={checkInputHasError('adress') ? 'is-error' : ''}
             />
-            <small>{getErrorMessage('adress', form.errors.adress)}</small>
           </InputGroup>
           <InputGroup>
             <label htmlFor="city">Cidade</label>
@@ -205,8 +213,8 @@ const Cart = () => {
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               value={form.values.city}
+              className={checkInputHasError('city') ? 'is-error' : ''}
             />
-            <small>{getErrorMessage('city', form.errors.city)}</small>
           </InputGroup>
           <Group left="155px" right="155px">
             <InputGroup>
@@ -218,8 +226,8 @@ const Cart = () => {
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 value={form.values.cep}
+                className={checkInputHasError('cep') ? 'is-error' : ''}
               />
-              <small>{getErrorMessage('cep', form.errors.cep)}</small>
             </InputGroup>
             <InputGroup>
               <label htmlFor="number">Número</label>
@@ -230,8 +238,8 @@ const Cart = () => {
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 value={form.values.number}
+                className={checkInputHasError('number') ? 'is-error' : ''}
               />
-              <small>{getErrorMessage('number', form.errors.number)}</small>
             </InputGroup>
           </Group>
           <InputGroup>
@@ -243,10 +251,8 @@ const Cart = () => {
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               value={form.values.complement}
+              className={checkInputHasError('complement') ? 'is-error' : ''}
             />
-            <small>
-              {getErrorMessage('complement', form.errors.complement)}
-            </small>
           </InputGroup>
           <Button
             type="button"
@@ -263,7 +269,7 @@ const Cart = () => {
           </Button>
         </SideBar>
         <SideBar className={payment ? '' : 'is-hidden'}>
-          <h3>Pagamento - Valor a pagar R$ 190,90</h3>
+          <h3>Pagamento - Valor a pagar {formatPrice(getTotalPrice())}</h3>
           <InputGroup>
             <label htmlFor="cardNameOwner">Nome no cartão</label>
             <input
@@ -273,10 +279,8 @@ const Cart = () => {
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               value={form.values.cardNameOwner}
+              className={checkInputHasError('cardNameOwner') ? 'is-error' : ''}
             />
-            <small>
-              {getErrorMessage('cardNameOwner', form.errors.cardNameOwner)}
-            </small>
           </InputGroup>
           <Group left="228px" right="83px">
             <InputGroup>
@@ -288,10 +292,8 @@ const Cart = () => {
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 value={form.values.cardNumber}
+                className={checkInputHasError('cardNumber') ? 'is-error' : ''}
               />
-              <small>
-                {getErrorMessage('cardNumber', form.errors.cardNumber)}
-              </small>
             </InputGroup>
             <InputGroup>
               <label htmlFor="cardCode">CVV</label>
@@ -302,8 +304,8 @@ const Cart = () => {
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 value={form.values.cardCode}
+                className={checkInputHasError('cardCode') ? 'is-error' : ''}
               />
-              <small>{getErrorMessage('cardCode', form.errors.cardCode)}</small>
             </InputGroup>
           </Group>
           <Group left="155px" right="155px">
@@ -316,10 +318,8 @@ const Cart = () => {
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 value={form.values.expiresMonth}
+                className={checkInputHasError('expiresMonth') ? 'is-error' : ''}
               />
-              <small>
-                {getErrorMessage('expiresMonth', form.errors.expiresMonth)}
-              </small>
             </InputGroup>
             <InputGroup>
               <label htmlFor="expiresYear">Ano de vencimento</label>
@@ -330,10 +330,8 @@ const Cart = () => {
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
                 value={form.values.expiresYear}
+                className={checkInputHasError('expiresYear') ? 'is-error' : ''}
               />
-              <small>
-                {getErrorMessage('expiresYear', form.errors.expiresYear)}
-              </small>
             </InputGroup>
           </Group>
           <Button
@@ -353,7 +351,7 @@ const Cart = () => {
           </Button>
         </SideBar>
         <SideBar className={orderPlaced ? '' : 'is-hidden'}>
-          <h3>Pedido realizado - #asjda</h3>
+          <h3>Pedido realizado - #???</h3>
           <TextOrderPlaced>
             Estamos felizes em informar que seu pedido já está em processo de
             preparação e, em breve, será entregue no endereço fornecido.
