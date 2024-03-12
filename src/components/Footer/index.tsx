@@ -1,4 +1,4 @@
-import { FooterContainer, Logo, P, SocialLinks } from './styles'
+import * as S from './styles'
 
 import logo from '../../assets/images/logo.svg'
 import instagram from '../../assets/images/instagram_logo.svg'
@@ -6,9 +6,9 @@ import facebook from '../../assets/images/facebook_logo.svg'
 import twitter from '../../assets/images/twitter_logo.svg'
 
 const Footer = () => (
-  <FooterContainer>
-    <Logo src={logo} alt="efood" />
-    <SocialLinks>
+  <S.FooterContainer>
+    <S.Logo src={logo} alt="efood" />
+    <S.SocialLinks>
       <a href="#">
         <img src={instagram} alt="instagram logo" />
       </a>
@@ -18,13 +18,13 @@ const Footer = () => (
       <a href="#">
         <img src={twitter} alt="twitter logo" />
       </a>
-    </SocialLinks>
-    <P>
+    </S.SocialLinks>
+    <S.P>
       A E-FOOD é uma plataforma para divulgação de estabelecimentos, a
       responsabilidade pela entrega, qualidade dos produtos é toda do
       estabelecimento contratado.
-    </P>
-  </FooterContainer>
+    </S.P>
+  </S.FooterContainer>
 )
 
 export default Footer

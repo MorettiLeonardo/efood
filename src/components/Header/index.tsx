@@ -1,12 +1,12 @@
-import { HeaderContainer, Title, HeaderImage } from './styles'
+import * as S from './styles'
 
 import logo from '../../assets/images/logo.svg'
 
 const Header = () => (
-  <HeaderContainer>
-    <HeaderImage src={logo} alt="Efood" />
-    <Title>Viva experiências gastronômicas no conforto da sua casa</Title>
-  </HeaderContainer>
+  <S.HeaderContainer>
+    <S.HeaderImage src={logo} alt="Efood" />
+    <S.Title>Viva experiências gastronômicas no conforto da sua casa</S.Title>
+  </S.HeaderContainer>
 )
 
 export default Header

@@ -1,34 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
+import { formatPrice } from '../../utils'
+
 import { close, remove } from '../../store/reducers/cart'
+import { usePurchaseMutation } from '../../services/api'
+import { RootReducer } from '../../store'
 
 import trash from '../../assets/images/trash.svg'
 
-import { RootReducer } from '../../store'
-
-import {
-  Overlay,
-  CartContainer,
-  SideBar,
-  Product,
-  Total,
-  Trash,
-  Button,
-  InputGroup,
-  Group,
-  TextOrderPlaced,
-  FormContainer
-} from './styles'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { usePurchaseMutation } from '../../services/api'
+import * as S from './styles'
 
 const Cart = () => {
-  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
-
   const [step, setStep] = useState(1)
 
-  const [purchase, { isError, isLoading, data }] = usePurchaseMutation()
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+
+  const [purchase] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -45,12 +35,26 @@ const Cart = () => {
       expiresYear: ''
     },
     validationSchema: Yup.object({
-      fullName: Yup.string().required('O campo é obrigatório'),
-      adress: Yup.string().required('O campo é obrigatório'),
-      city: Yup.string().required('O campo é obrigatório'),
-      cep: Yup.string().required('O campo é obrigatório'),
-      number: Yup.string().required('O campo é obrigatório'),
-      complement: Yup.string().required('O capo é obrigatorio'),
+      fullName: Yup.string()
+        .min(5, 'O campo precisa ter pelo menos 5 caracteres')
+        .required('O campo é obrigatório'),
+      adress: Yup.string()
+        .min(5, 'O campo precisa ter pelo menos 5 caracteres')
+        .required('O campo é obrigatório'),
+      city: Yup.string()
+        .min(5, 'O campo precisa ter pelo menos 5 caracteres')
+        .required('O campo é obrigatório'),
+      cep: Yup.string()
+        .min(9, 'O campo precisa ter pelo menos 9 caracteres')
+        .max(9, 'O campo pode ter no máximo 9 caracteres')
+        .required('O campo é obrigatório'),
+      number: Yup.string()
+        .min(1, 'o campo precisa ter pelo menos um caracter')
+        .required('O campo é obrigatório'),
+      complement: Yup.string().min(
+        5,
+        'O campo precisa ter pelo menos 5 caracteres'
+      ),
       cardNameOwner: Yup.string().required('O campo é obrigatório'),
       cardNumber: Yup.string().required('O campo é obrigatório'),
       cardCode: Yup.string().required('O campo é obrigatório'),
@@ -94,13 +98,6 @@ const Cart = () => {
     dispatch(remove(id))
   }
 
-  const formatPrice = (price = 0) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(price)
-  }
-
   const getTotalPrice = () => {
     return items.reduce((acc, currentValue) => {
       return (acc += currentValue.preco)
@@ -137,41 +134,41 @@ const Cart = () => {
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
-      <Overlay onClick={closeCart} />
-      <FormContainer onSubmit={form.handleSubmit}>
+    <S.CartContainer className={isOpen ? 'is-open' : ''}>
+      <S.Overlay onClick={closeCart} />
+      <S.FormContainer onSubmit={form.handleSubmit}>
         {step === 1 && (
-          <SideBar>
+          <S.SideBar>
             <ul>
               {items.map((item) => (
-                <Product key={item.id}>
-                  <Trash src={trash} onClick={() => removeItem(item.id)} />
+                <S.Product key={item.id}>
+                  <S.Trash src={trash} onClick={() => removeItem(item.id)} />
                   <img src={item.foto} alt={item.nome} />
                   <div>
                     <h4>{item.nome}</h4>
                     <p>{formatPrice(item.preco)}</p>
                   </div>
-                </Product>
+                </S.Product>
               ))}
             </ul>
-            <Total>
+            <S.Total>
               <p>Valor total</p>
               <p>{formatPrice(getTotalPrice())}</p>
-            </Total>
-            <Button
+            </S.Total>
+            <S.Button
               type="button"
               className="margin-top"
               onClick={handleContinueDelivery}
             >
               Continuar com a entrega
-            </Button>
-          </SideBar>
+            </S.Button>
+          </S.SideBar>
         )}
 
         {step === 2 && (
-          <SideBar>
+          <S.SideBar>
             <h3>Entrega</h3>
-            <InputGroup>
+            <S.InputGroup>
               <label htmlFor="fullName">Quem vai receber</label>
               <input
                 id="fullName"
@@ -182,8 +179,8 @@ const Cart = () => {
                 onBlur={form.handleBlur}
                 className={checkInputHasError('fullName') ? 'is-error' : ''}
               />
-            </InputGroup>
-            <InputGroup>
+            </S.InputGroup>
+            <S.InputGroup>
               <label htmlFor="adress">Endereço</label>
               <input
                 type="text"
@@ -194,8 +191,8 @@ const Cart = () => {
                 value={form.values.adress}
                 className={checkInputHasError('adress') ? 'is-error' : ''}
               />
-            </InputGroup>
-            <InputGroup>
+            </S.InputGroup>
+            <S.InputGroup>
               <label htmlFor="city">Cidade</label>
               <input
                 type="text"
@@ -206,9 +203,9 @@ const Cart = () => {
                 value={form.values.city}
                 className={checkInputHasError('city') ? 'is-error' : ''}
               />
-            </InputGroup>
-            <Group left="155px" right="155px">
-              <InputGroup>
+            </S.InputGroup>
+            <S.Group left="155px" right="155px">
+              <S.InputGroup>
                 <label htmlFor="cep">CEP</label>
                 <input
                   type="text"
@@ -219,8 +216,8 @@ const Cart = () => {
                   value={form.values.cep}
                   className={checkInputHasError('cep') ? 'is-error' : ''}
                 />
-              </InputGroup>
-              <InputGroup>
+              </S.InputGroup>
+              <S.InputGroup>
                 <label htmlFor="number">Número</label>
                 <input
                   type="text"
@@ -231,9 +228,9 @@ const Cart = () => {
                   value={form.values.number}
                   className={checkInputHasError('number') ? 'is-error' : ''}
                 />
-              </InputGroup>
-            </Group>
-            <InputGroup>
+              </S.InputGroup>
+            </S.Group>
+            <S.InputGroup>
               <label htmlFor="complement">Complemento (opcional)</label>
               <input
                 type="text"
@@ -244,24 +241,24 @@ const Cart = () => {
                 value={form.values.complement}
                 className={checkInputHasError('complement') ? 'is-error' : ''}
               />
-            </InputGroup>
-            <Button
+            </S.InputGroup>
+            <S.Button
               type="button"
               className="margin-top"
               onClick={handleContinuePayment}
             >
               Continuar com o pagamento
-            </Button>
-            <Button type="button" onClick={handleGoBack}>
+            </S.Button>
+            <S.Button type="button" onClick={handleGoBack}>
               Voltar para o carrinho
-            </Button>
-          </SideBar>
+            </S.Button>
+          </S.SideBar>
         )}
 
         {step === 3 && (
-          <SideBar>
+          <S.SideBar>
             <h3>Pagamento - Valor a pagar {formatPrice(getTotalPrice())}</h3>
-            <InputGroup>
+            <S.InputGroup>
               <label htmlFor="cardNameOwner">Nome no cartão</label>
               <input
                 type="text"
@@ -274,9 +271,9 @@ const Cart = () => {
                   checkInputHasError('cardNameOwner') ? 'is-error' : ''
                 }
               />
-            </InputGroup>
-            <Group left="228px" right="83px">
-              <InputGroup>
+            </S.InputGroup>
+            <S.Group left="228px" right="83px">
+              <S.InputGroup>
                 <label htmlFor="cardNumber">Número do cartão</label>
                 <input
                   type="number"
@@ -287,8 +284,8 @@ const Cart = () => {
                   value={form.values.cardNumber}
                   className={checkInputHasError('cardNumber') ? 'is-error' : ''}
                 />
-              </InputGroup>
-              <InputGroup>
+              </S.InputGroup>
+              <S.InputGroup>
                 <label htmlFor="cardCode">CVV</label>
                 <input
                   type="number"
@@ -299,10 +296,10 @@ const Cart = () => {
                   value={form.values.cardCode}
                   className={checkInputHasError('cardCode') ? 'is-error' : ''}
                 />
-              </InputGroup>
-            </Group>
-            <Group left="155px" right="155px">
-              <InputGroup>
+              </S.InputGroup>
+            </S.Group>
+            <S.Group left="155px" right="155px">
+              <S.InputGroup>
                 <label htmlFor="expiresMonth">Mês de vencimento</label>
                 <input
                   type="number"
@@ -315,8 +312,8 @@ const Cart = () => {
                     checkInputHasError('expiresMonth') ? 'is-error' : ''
                   }
                 />
-              </InputGroup>
-              <InputGroup>
+              </S.InputGroup>
+              <S.InputGroup>
                 <label htmlFor="expiresYear">Ano de vencimento</label>
                 <input
                   type="number"
@@ -329,48 +326,48 @@ const Cart = () => {
                     checkInputHasError('expiresYear') ? 'is-error' : ''
                   }
                 />
-              </InputGroup>
-            </Group>
-            <Button type="submit" className="margin-top" onClick={submitForm}>
+              </S.InputGroup>
+            </S.Group>
+            <S.Button type="submit" className="margin-top" onClick={submitForm}>
               Finalizar pagamento
-            </Button>
-            <Button type="button" onClick={handleGoBack}>
+            </S.Button>
+            <S.Button type="button" onClick={handleGoBack}>
               Voltar para a edição de endereço
-            </Button>
-          </SideBar>
+            </S.Button>
+          </S.SideBar>
         )}
 
         {step === 4 && (
-          <SideBar>
+          <S.SideBar>
             <h3>Pedido realizado - #???</h3>
-            <TextOrderPlaced>
+            <S.TextOrderPlaced>
               Estamos felizes em informar que seu pedido já está em processo de
               preparação e, em breve, será entregue no endereço fornecido.
-            </TextOrderPlaced>
-            <TextOrderPlaced>
+            </S.TextOrderPlaced>
+            <S.TextOrderPlaced>
               Gostaríamos de ressaltar que nossos entregadores não estão
               autorizados a realizar cobranças extras.
-            </TextOrderPlaced>
-            <TextOrderPlaced>
+            </S.TextOrderPlaced>
+            <S.TextOrderPlaced>
               Lembre-se da importância de higienizar as mãos após o recebimento
               do pedido, garantindo assim sua segurança e bem-estar durante a
               refeição.
-            </TextOrderPlaced>
-            <TextOrderPlaced>
+            </S.TextOrderPlaced>
+            <S.TextOrderPlaced>
               Esperamos que desfrute de uma deliciosa e agradável experiência
               gastronômica. Bom apetite!
-            </TextOrderPlaced>
-            <Button
+            </S.TextOrderPlaced>
+            <S.Button
               type="button"
               className="margin-top"
               onClick={() => setStep(1)}
             >
               Concluir
-            </Button>
-          </SideBar>
+            </S.Button>
+          </S.SideBar>
         )}
-      </FormContainer>
-    </CartContainer>
+      </S.FormContainer>
+    </S.CartContainer>
   )
 }
 

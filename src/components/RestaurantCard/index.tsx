@@ -4,14 +4,7 @@ import star from '../../assets/images/star.svg'
 
 import Tag from '../Tag'
 
-import {
-  Card,
-  Infos,
-  CardContainer,
-  Description,
-  RestaurantImage,
-  TagContainer
-} from './styles'
+import * as S from './styles'
 
 type Props = {
   id: number
@@ -40,25 +33,25 @@ const RestaurantCard = ({
   id
 }: Props) => {
   return (
-    <Card>
-      <TagContainer>
+    <S.Card>
+      <S.TagContainer>
         <Tag>{type}</Tag>
-      </TagContainer>
-      <RestaurantImage src={cover} alt="Foto do restaurante" />
-      <CardContainer>
-        <Infos>
+      </S.TagContainer>
+      <S.RestaurantImage src={cover} alt="Foto do restaurante" />
+      <S.CardContainer>
+        <S.Infos>
           <h3>{title}</h3>
           <div>
             <span>{review}</span>
             <img src={star} alt="estrelas" />
           </div>
-        </Infos>
-        <Description>{descMax(description)}</Description>
+        </S.Infos>
+        <S.Description>{descMax(description)}</S.Description>
         <Link to={`/restaurante/${id}`}>
           <Tag>Saiba mais</Tag>
         </Link>
-      </CardContainer>
-    </Card>
+      </S.CardContainer>
+    </S.Card>
   )
 }
 

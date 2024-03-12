@@ -1,21 +1,14 @@
 import { useState } from 'react'
-
-import close from '../../assets/images/close.svg'
-
-import {
-  Card,
-  CardButton,
-  CardDescription,
-  CardImage,
-  CardTitle,
-  Modal,
-  ModalContent
-} from './styles'
-import { descMax } from '../RestaurantCard'
 import { useDispatch } from 'react-redux'
 
 import { add, open } from '../../store/reducers/cart'
+
 import { Cardapio } from '../../pages/Home'
+
+import { descMax } from '../RestaurantCard'
+
+import close from '../../assets/images/close.svg'
+import * as S from './styles'
 
 type Modal = {
   isVisible: boolean
@@ -42,21 +35,21 @@ const RestaurantDishes = ({ cardapio }: Props) => {
   }
 
   return (
-    <Card>
-      <CardImage src={cardapio.foto} alt={cardapio.nome} />
-      <CardTitle>{cardapio.nome}</CardTitle>
-      <CardDescription>{descMax(cardapio.descricao)}</CardDescription>
-      <Modal className={modal.isVisible ? 'visible' : ''}>
-        <ModalContent className="container">
+    <S.Card>
+      <S.CardImage src={cardapio.foto} alt={cardapio.nome} />
+      <S.CardTitle>{cardapio.nome}</S.CardTitle>
+      <S.CardDescription>{descMax(cardapio.descricao)}</S.CardDescription>
+      <S.Modal className={modal.isVisible ? 'visible' : ''}>
+        <S.ModalContent className="container">
           <img src={cardapio.foto} alt={cardapio.nome} />
           <div>
-            <CardTitle>{cardapio.nome}</CardTitle>
-            <CardDescription>{cardapio.descricao}</CardDescription>
+            <S.CardTitle>{cardapio.nome}</S.CardTitle>
+            <S.CardDescription>{cardapio.descricao}</S.CardDescription>
             <br />
-            <CardDescription>Serve: de {cardapio.porcao}</CardDescription>
-            <CardButton onClick={addToCart}>
+            <S.CardDescription>Serve: de {cardapio.porcao}</S.CardDescription>
+            <S.CardButton onClick={addToCart}>
               Adicionar ao carrinho - R$ {cardapio.preco}
-            </CardButton>
+            </S.CardButton>
           </div>
           <img
             src={close}
@@ -64,13 +57,13 @@ const RestaurantDishes = ({ cardapio }: Props) => {
             style={{ cursor: 'pointer' }}
             onClick={() => setModal({ isVisible: false, url: '' })}
           />
-        </ModalContent>
+        </S.ModalContent>
         <div className="overlay" onClick={() => closeModal()}></div>
-      </Modal>
-      <CardButton onClick={() => setModal({ isVisible: true, url: '' })}>
+      </S.Modal>
+      <S.CardButton onClick={() => setModal({ isVisible: true, url: '' })}>
         Mais detalhes
-      </CardButton>
-    </Card>
+      </S.CardButton>
+    </S.Card>
   )
 }
 
