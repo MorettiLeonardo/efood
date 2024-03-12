@@ -15,18 +15,18 @@ type PurchasePayload = {
       description: string
       city: string
       zipCode: string
-      number: number
+      number: string
       complement: string
     }
   }
   payment: {
     card: {
       name?: string
-      number?: number
-      code?: number
+      number?: string
+      code?: string
       expires: {
-        month: number
-        year: number
+        month: string
+        year: string
       }
     }
   }
