@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 import { colors } from '../../styles'
 
+type Props = {
+  left?: string
+  right?: string
+}
+
 export const Overlay = styled.div`
   position: absolute;
   top: 0;
@@ -31,6 +36,13 @@ export const CartContainer = styled.div`
 
   .is-hidden {
     display: none;
+  }
+
+  .empty-text {
+    font-size: 14px;
+    line-height: 22px;
+    color: ${colors.white};
+    text-align: center;
   }
 `
 
@@ -129,11 +141,6 @@ export const InputGroup = styled.div`
     }
   }
 `
-
-type Props = {
-  left?: string
-  right?: string
-}
 
 export const Group = styled.div<Props>`
   display: grid;

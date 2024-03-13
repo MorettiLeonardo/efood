@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux'
 
 import { add, open } from '../../store/reducers/cart'
 
-import { Cardapio } from '../../pages/Home'
-
 import { descMax } from '../RestaurantCard'
 
 import close from '../../assets/images/close.svg'
@@ -16,7 +14,7 @@ type Modal = {
 }
 
 type Props = {
-  cardapio: Cardapio
+  cardapio: Menu
 }
 
 const RestaurantDishes = ({ cardapio }: Props) => {

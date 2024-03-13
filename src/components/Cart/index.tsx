@@ -18,7 +18,7 @@ const Cart = () => {
 
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
 
-  const [purchase] = usePurchaseMutation()
+  const [purchase, { data, isLoading }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -139,29 +139,41 @@ const Cart = () => {
       <S.FormContainer onSubmit={form.handleSubmit}>
         {step === 1 && (
           <S.SideBar>
-            <ul>
-              {items.map((item) => (
-                <S.Product key={item.id}>
-                  <S.Trash src={trash} onClick={() => removeItem(item.id)} />
-                  <img src={item.foto} alt={item.nome} />
-                  <div>
-                    <h4>{item.nome}</h4>
-                    <p>{formatPrice(item.preco)}</p>
-                  </div>
-                </S.Product>
-              ))}
-            </ul>
-            <S.Total>
-              <p>Valor total</p>
-              <p>{formatPrice(getTotalPrice())}</p>
-            </S.Total>
-            <S.Button
-              type="button"
-              className="margin-top"
-              onClick={handleContinueDelivery}
-            >
-              Continuar com a entrega
-            </S.Button>
+            {items.length > 0 ? (
+              <>
+                <ul>
+                  {items.map((item) => (
+                    <S.Product key={item.id}>
+                      <S.Trash
+                        src={trash}
+                        onClick={() => removeItem(item.id)}
+                      />
+                      <img src={item.foto} alt={item.nome} />
+                      <div>
+                        <h4>{item.nome}</h4>
+                        <p>{formatPrice(item.preco)}</p>
+                      </div>
+                    </S.Product>
+                  ))}
+                </ul>
+                <S.Total>
+                  <p>Valor total</p>
+                  <p>{formatPrice(getTotalPrice())}</p>
+                </S.Total>
+                <S.Button
+                  type="button"
+                  className="margin-top"
+                  onClick={handleContinueDelivery}
+                >
+                  Continuar com a entrega
+                </S.Button>
+              </>
+            ) : (
+              <p className="empty-text">
+                O carrinho está vazio, adicione pelo menos um produto para
+                continuar com a compra
+              </p>
+            )}
           </S.SideBar>
         )}
 
@@ -328,8 +340,13 @@ const Cart = () => {
                 />
               </S.InputGroup>
             </S.Group>
-            <S.Button type="submit" className="margin-top" onClick={submitForm}>
-              Finalizar pagamento
+            <S.Button
+              type="submit"
+              className="margin-top"
+              onClick={submitForm}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Finalizando pagamento...' : 'Finalizar pagamento'}
             </S.Button>
             <S.Button type="button" onClick={handleGoBack}>
               Voltar para a edição de endereço
@@ -339,7 +356,7 @@ const Cart = () => {
 
         {step === 4 && (
           <S.SideBar>
-            <h3>Pedido realizado - #???</h3>
+            <h3>Pedido realizado - {data?.orderId}</h3>
             <S.TextOrderPlaced>
               Estamos felizes em informar que seu pedido já está em processo de
               preparação e, em breve, será entregue no endereço fornecido.
@@ -360,7 +377,7 @@ const Cart = () => {
             <S.Button
               type="button"
               className="margin-top"
-              onClick={() => setStep(1)}
+              onClick={() => (setStep(1), closeCart())}
             >
               Concluir
             </S.Button>
