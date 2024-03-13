@@ -16,6 +16,7 @@ export const HeaderWrapper = styled.div`
   @media (max-width: ${breakpoints.desktop}) {
     flex-direction: column;
     gap: 24px;
+    text-align: center;
   }
 `
 

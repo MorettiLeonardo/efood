@@ -6,6 +6,7 @@ import { add, open } from '../../store/reducers/cart'
 import { descMax } from '../RestaurantCard'
 
 import close from '../../assets/images/close.svg'
+
 import * as S from './styles'
 
 type Modal = {

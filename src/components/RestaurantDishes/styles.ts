@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const Card = styled.div`
   position: relative;
@@ -99,5 +99,25 @@ export const ModalContent = styled.div`
     width: 280px;
     height: 280px;
     object-fit: cover;
+  }
+
+  @media (max-width: ${breakpoints.desktop}) {
+    flex-direction: column;
+    height: auto;
+
+    img:last-child {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    img {
+      width: auto;
+      height: auto;
+    }
+
+    button {
+      text-align: center;
+    }
   }
 `
