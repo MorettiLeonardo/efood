@@ -6,11 +6,12 @@ import RestaurantDishes from '../RestaurantDishes'
 
 import { List, ListContainer } from './styles'
 import Loader from '../Loader'
+import { RestaurantParams } from '../../pages/Restaurant'
 
 export const DishesList = () => {
-  const { id } = useParams()
+  const { id } = useParams() as RestaurantParams
 
-  const { data: restaurant } = useGetRestaurantDishesQuery(id!)
+  const { data: restaurant } = useGetRestaurantDishesQuery(id)
 
   if (!restaurant) return <Loader />
 

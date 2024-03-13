@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import InputMask from 'react-input-mask'
 
 import { formatPrice } from '../../utils'
 
-import { close, remove } from '../../store/reducers/cart'
+import { close, remove, clear } from '../../store/reducers/cart'
 import { usePurchaseMutation } from '../../services/api'
 import { RootReducer } from '../../store'
 
@@ -18,7 +19,7 @@ const Cart = () => {
 
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
 
-  const [purchase, { data, isLoading }] = usePurchaseMutation()
+  const [purchase, { data, isLoading, isSuccess }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -77,14 +78,17 @@ const Cart = () => {
           card: {
             name: values.cardNameOwner,
             number: values.cardNumber,
-            code: values.cardCode,
+            code: Number(values.cardCode),
             expires: {
-              month: '1',
-              year: '2023'
+              month: Number(values.expiresMonth),
+              year: Number(values.expiresYear)
             }
           }
         },
-        products: [{ id: 1, price: 10 }]
+        products: items.map((item) => ({
+          id: item.id,
+          price: item.preco as number
+        }))
       })
   })
 
@@ -124,14 +128,50 @@ const Cart = () => {
     setStep((prevStep) => prevStep - 1)
   }
 
+  const hasErrorInput = () => {
+    const {
+      fullName,
+      adress,
+      cardCode,
+      cardNameOwner,
+      cardNumber,
+      cep,
+      city,
+      expiresYear,
+      expiresMonth,
+      number
+    } = form.values
+
+    return [
+      fullName,
+      adress,
+      cardCode,
+      cardNameOwner,
+      cardNumber,
+      cep,
+      city,
+      expiresYear,
+      expiresMonth,
+      number
+    ].some((value) => value === '')
+  }
+
   const submitForm = () => {
-    form.handleSubmit()
-    if (form.isValid) {
-      setStep(4)
+    if (hasErrorInput()) {
+      alert('Preencha todos os campos')
+      return
     } else {
-      alert('Preencha os campos')
+      form.handleSubmit()
+      setStep(4)
+      form.resetForm()
     }
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clear())
+    }
+  }, [isSuccess, dispatch])
 
   return (
     <S.CartContainer className={isOpen ? 'is-open' : ''}>
@@ -219,7 +259,8 @@ const Cart = () => {
             <S.Group left="155px" right="155px">
               <S.InputGroup>
                 <label htmlFor="cep">CEP</label>
-                <input
+                <InputMask
+                  mask={'99999-999'}
                   type="text"
                   id="cep"
                   name="cep"
@@ -287,8 +328,9 @@ const Cart = () => {
             <S.Group left="228px" right="83px">
               <S.InputGroup>
                 <label htmlFor="cardNumber">Número do cartão</label>
-                <input
-                  type="number"
+                <InputMask
+                  mask={'9999 9999 9999 9999'}
+                  type="text"
                   id="cardNumber"
                   name="cardNumber"
                   onChange={form.handleChange}
@@ -299,8 +341,9 @@ const Cart = () => {
               </S.InputGroup>
               <S.InputGroup>
                 <label htmlFor="cardCode">CVV</label>
-                <input
-                  type="number"
+                <InputMask
+                  mask={'999'}
+                  type="text"
                   id="cardCode"
                   name="cardCode"
                   onChange={form.handleChange}
@@ -313,8 +356,9 @@ const Cart = () => {
             <S.Group left="155px" right="155px">
               <S.InputGroup>
                 <label htmlFor="expiresMonth">Mês de vencimento</label>
-                <input
-                  type="number"
+                <InputMask
+                  mask={'99'}
+                  type="text"
                   id="expiresMonth"
                   name="expiresMonth"
                   onChange={form.handleChange}
@@ -327,8 +371,9 @@ const Cart = () => {
               </S.InputGroup>
               <S.InputGroup>
                 <label htmlFor="expiresYear">Ano de vencimento</label>
-                <input
-                  type="number"
+                <InputMask
+                  mask={'99'}
+                  type="text"
                   id="expiresYear"
                   name="expiresYear"
                   onChange={form.handleChange}

@@ -7,10 +7,14 @@ import DishesList from '../../components/DishesList'
 import Footer from '../../components/Footer'
 import RestaurantHeader from '../../components/RestaurantHeader'
 
-const RestaurantPage = () => {
-  const { id } = useParams()
+export type RestaurantParams = {
+  id: string
+}
 
-  const { data: restaurant } = useGetRestaurantDishesQuery(id!)
+const RestaurantPage = () => {
+  const { id } = useParams() as RestaurantParams
+
+  const { data: restaurant } = useGetRestaurantDishesQuery(id)
 
   return (
     <>
